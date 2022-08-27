@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QVector>
 #include "task.h"
+#include "SysInfo.h"
+#include "CpuWidget.h"
+#include "MemoryWidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +32,9 @@ protected:
 private:
     Ui::MainWindow *ui;
     QVector<Task*> mTasks;
+    CpuWidget mCpuWidget;
+    MemoryWidget mMemoryWidget;
+
 
 };
 

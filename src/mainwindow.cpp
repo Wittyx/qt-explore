@@ -2,18 +2,42 @@
 #include "./ui_mainwindow.h"
 #include <QMessageBox>
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::addTask);
-    //Why not working
+    //Why not working, because sinal and slot arguments are not compatible
     //connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::taskStatusChanged);
     connect(ui->addTaskButton, SIGNAL(clicked()), this, SLOT(taskStatusChanged()));
 
 
+    SysInfo::instance().init();
+
+    QHBoxLayout *statusBarLayout = new QHBoxLayout();
+    ui->statusBar->setLayout(statusBarLayout);
+    ui->statusBar->addWidget(&mCpuWidget);
+
+    QLabel *cpuStatusLabel = new QLabel(ui->statusBar);
+    cpuStatusLabel->setObjectName(QString::fromUtf8("statusLabel"));
+    cpuStatusLabel->setText(QString::fromUtf8("CPU"));
+    ui->statusBar->addWidget(cpuStatusLabel);
+
+
+    ui->statusBar->addWidget(&mMemoryWidget);
+    QLabel *memoryStatusLabel = new QLabel(ui->statusBar);
+    memoryStatusLabel->setObjectName(QString::fromUtf8("statusLabel"));
+    memoryStatusLabel->setText(QString::fromUtf8("Memory"));
+    ui->statusBar->addWidget(memoryStatusLabel);
+
+    ui->statusBar->setStyleSheet(
+        "QStatusBar::item { border: none; } "
+        //"QStatusBar::item { border: 1px solid red; border-radius: 3px; } "
+    );
+
+    ui->statusBar->setLayoutDirection(Qt::RightToLeft);
+    //ui->statusBar->showMessage("status");
 }
 
 void MainWindow::removeOneTask(Task* task)
