@@ -4,7 +4,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    thread_pool(new QThreadPool(this))
 {
     ui->setupUi(this);
     connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::addTask);
@@ -38,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->statusBar->setLayoutDirection(Qt::RightToLeft);
     //ui->statusBar->showMessage("status");
+
+    //change pool size
+    thread_pool->setMaxThreadCount(3);
 }
 
 void MainWindow::removeOneTask(Task* task)
@@ -68,7 +72,7 @@ void MainWindow::taskStatusChanged(Task*)
 }
 
 void MainWindow::addTask(){
-    Task *task = new Task();
+    Task *task = new Task(thread_pool);
     connect(task, &Task::statusChanged,
             this, &MainWindow::taskStatusChanged);
     connect(task, &Task::removed,
@@ -86,5 +90,8 @@ void MainWindow::showEvent(QShowEvent *event) {
 
 MainWindow::~MainWindow()
 {
+    thread_pool->clear();
+    thread_pool->waitForDone();
+    delete thread_pool;
     delete ui;
 }

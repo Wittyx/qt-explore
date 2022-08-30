@@ -7,6 +7,8 @@
 #include "SysInfo.h"
 #include "CpuWidget.h"
 #include "MemoryWidget.h"
+#include <QThreadPool>
+
 
 namespace Ui {
 class MainWindow;
@@ -34,7 +36,7 @@ private:
     QVector<Task*> mTasks;
     CpuWidget mCpuWidget;
     MemoryWidget mMemoryWidget;
-
+    QThreadPool *thread_pool;
 
 };
 

@@ -2,6 +2,9 @@
 #define TASK_H
 
 #include <QWidget>
+#include <QThread>
+#include "MyWorker.h"
+#include <QThreadPool>
 
 namespace Ui {
 class Task;
@@ -12,7 +15,7 @@ class Task : public QWidget
     Q_OBJECT
 
 public:
-    explicit Task(QWidget *parent = nullptr);
+    explicit Task(QThreadPool *threadPool= nullptr, QWidget *parent = nullptr);
     ~Task();
     QString name() const;
     void setName(const QString& name);
@@ -25,12 +28,15 @@ signals:
 public slots:
     void rename();
     void checked(bool checked);
+    void startTask();
 
 private slots:
     void removeSelf();
 
 private:
     Ui::Task *ui;
+    QThread *thread;
+    QThreadPool *threadPool;
 };
 
 #endif // TASK_H
