@@ -3,6 +3,7 @@
 #include <QInputDialog>
 #include "MyTaskSignals.h"
 #include "MyTask.h"
+#include <QtDebug>
 
 Task::Task(QThreadPool *threadPool,QWidget *parent) :
     QWidget(parent),
@@ -12,8 +13,12 @@ Task::Task(QThreadPool *threadPool,QWidget *parent) :
    thread = new QThread(this);
     qDebug() << "Create Task Thread ID:" <<thread->currentThreadId();
     ui->setupUi(this);
-    connect(ui->editButton, &QPushButton::clicked, this, &Task::rename);
+    //connect(ui->editButton, &QPushButton::clicked, this, &Task::rename);
+    connect(ui->editButton, &QPushButton::clicked, this, &Task::startRenameClicked);
+    connect(this, &Task::startRenameClicked, this, &Task::rename);
+
     connect(ui->checkBox, &QCheckBox::clicked, this, &Task::checked);
+
 
     //connect(ui->removeButton, &QPushButton::clicked, this, &Task::removeSelf);
     connect(ui->removeButton, &QPushButton::clicked, this,
@@ -24,6 +29,7 @@ Task::Task(QThreadPool *threadPool,QWidget *parent) :
 
 void Task::rename()
 {
+    qDebug() <<"Testing rename";
     bool ok;
     QString value = QInputDialog::getText(
                 this, tr("Edit task"),

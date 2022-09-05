@@ -2,6 +2,7 @@
 #include <QTime>
 #include <QtDebug>
 
+/*Thread, see Task.cpp create*/
 MyWorker::MyWorker(QObject *parent) : QObject(parent)
 {
 

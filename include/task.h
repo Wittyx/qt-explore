@@ -24,7 +24,7 @@ public:
 signals:
     void removed(Task* task);
     void statusChanged(Task* task);
-
+    void startRenameClicked();
 public slots:
     void rename();
     void checked(bool checked);

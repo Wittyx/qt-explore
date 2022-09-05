@@ -2,7 +2,7 @@
 
 #include <QTime>
 #include <QtDebug>
-
+/*Thread Pool*/
 MyTask::MyTask()
 {
 
