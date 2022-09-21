@@ -75,6 +75,13 @@
       </property>
      </spacer>
     </item>
+    <item>
+     <widget class="QPushButton" name="tableViewSample">
+      <property name="text">
+       <string>tableViewSample</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QToolBar" name="toolBar">

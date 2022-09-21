@@ -1,6 +1,12 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "productTableView.h"
+#include "ExQTreeWidget.h"
 #include <QMessageBox>
+#include <QMenuBar>
+#include <mainwindow.h>
+#include <QFileDialog>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,8 +48,64 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //change pool size
     thread_pool->setMaxThreadCount(3);
+
+    //Add table view
+    connect(ui->tableViewSample,&QPushButton::clicked,this, &MainWindow::createTableView);
+
+    addMenuWithAction();
 }
 
+void MainWindow::addMenuWithAction(){
+    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
+    QAction *openIniFileAct = fileMenu->addAction(tr("Open I&NI File..."), this, &MainWindow::openIniFile);
+    openIniFileAct->setShortcut(tr("Ctrl+N"));
+
+    QMenu *treeView = menuBar()->addMenu(tr("&TreeView"));
+
+    QAction *openTreeViewAct = treeView->addAction(tr("TreeViewDemo"), this, &MainWindow::openTreeView);
+    openTreeViewAct->setShortcut(tr("Ctrl+T"));
+}
+
+void MainWindow::openIniFile(){
+    const QString directory = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+    const QString fileName =
+        QFileDialog::getOpenFileName(this, tr("Open INI File"),
+                                     QDir::currentPath()+"/../", tr("INI Files (*.ini *.conf)"));
+    if (fileName.isEmpty())
+        return;
+
+    SettingsPtr settings(new QSettings(fileName, QSettings::IniFormat));
+
+    setSettingsObject(settings);
+    //fallbacksAct->setEnabled(false);
+}
+void MainWindow::setSettingsObject(const SettingsPtr &settings)
+{
+    SettingsTree *settingsTree = new SettingsTree();
+    settingsTree->resize(1000,1000);
+    settingsTree->show();
+
+    //settings->setFallbacksEnabled(fallbacksAct->isChecked());
+    settings->setFallbacksEnabled(false);
+    settingsTree->setSettingsObject(settings);
+
+    QString niceName = QDir::cleanPath(settings->fileName());
+    int pos = niceName.lastIndexOf(QLatin1Char('/'));
+    if (pos != -1)
+        niceName.remove(0, pos + 1);
+
+    if (!settings->isWritable())
+        niceName = tr("%1 (read only)").arg(niceName);
+
+    setWindowTitle(tr("%1 - %2").arg(niceName, QCoreApplication::applicationName()));
+    statusBar()->showMessage(tr("Opened \"%1\"").arg(QDir::toNativeSeparators(settings->fileName())));
+}
+
+void MainWindow::openTreeView(){
+    QWidget *wdg = new ExQTreeWidget();
+    wdg->resize(2000,2000);
+    wdg->show();
+}
 void MainWindow::removeOneTask(Task* task)
 {
     mTasks.removeOne(task);
@@ -69,6 +131,13 @@ void MainWindow::taskStatusChanged(Task*)
                 .arg(todoCount)
                 .arg(completedCount)
                 );
+}
+
+void MainWindow::createTableView()
+{
+    QWidget *wdg = new productTableView();
+    wdg->resize(1000,1000);
+    wdg->show();
 }
 
 void MainWindow::addTask(){

@@ -12,6 +12,8 @@ set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo" CACHE STRING "" FORCE)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
+# CMAKE_AUTORCC need be ON for resource file.
+set(CMAKE_AUTORCC ON)
 set(CMAKE_PREFIX_PATH $ENV{QTDIR})
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
