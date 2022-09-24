@@ -6,6 +6,11 @@ elseif(UNIX)
     project(MY_PROJECT)
 endif()
 
+set(QT_ROOT_DIR "" CACHE PATH "Root directory of Qt")
+if (NOT QT_ROOT_DIR)
+     set(QT_ROOT_DIR $ENV{QTDIR})
+endif()
+message("QT_ROOT_DIR include dir: ${QT_ROOT_DIR}")
 set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo" CACHE STRING "" FORCE)
 
 #======================= INCLUSION OF Qt =======================#
@@ -14,8 +19,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 # CMAKE_AUTORCC need be ON for resource file.
 set(CMAKE_AUTORCC ON)
-set(CMAKE_PREFIX_PATH $ENV{QTDIR})
-##Add Qt5Core_DIR: to ENV
+SET(CMAKE_PREFIX_PATH ${QT_ROOT_DIR}/lib/cmake ${QT_WEBKIT_CMAKE_DIR} ${CMAKE_PREFIX_PATH})
+
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
