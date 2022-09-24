@@ -15,6 +15,7 @@ set(CMAKE_AUTOUIC ON)
 # CMAKE_AUTORCC need be ON for resource file.
 set(CMAKE_AUTORCC ON)
 set(CMAKE_PREFIX_PATH $ENV{QTDIR})
+##Add Qt5Core_DIR: to ENV
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
