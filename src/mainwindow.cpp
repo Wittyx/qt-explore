@@ -2,10 +2,12 @@
 #include "./ui_mainwindow.h"
 #include "productTableView.h"
 #include "ExQTreeWidget.h"
+#include "WQMLEngine.h"
 #include <QMessageBox>
 #include <QMenuBar>
 #include <mainwindow.h>
 #include <QFileDialog>
+#include <mainwindow.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -64,6 +66,10 @@ void MainWindow::addMenuWithAction(){
 
     QAction *openTreeViewAct = treeView->addAction(tr("TreeViewDemo"), this, &MainWindow::openTreeView);
     openTreeViewAct->setShortcut(tr("Ctrl+T"));
+
+    QMenu *qmlMenu = menuBar()->addMenu(tr("&QML"));
+    QAction *openQmlexpore = qmlMenu->addAction(tr("QML_Explore"), this, &MainWindow::qmlexpore);
+
 }
 
 void MainWindow::openIniFile(){
@@ -105,6 +111,11 @@ void MainWindow::openTreeView(){
     QWidget *wdg = new ExQTreeWidget();
     wdg->resize(2000,2000);
     wdg->show();
+}
+
+void MainWindow::qmlexpore(){
+    WQMLEngine *engine = new WQMLEngine();
+    engine->createQmlWindow(nullptr);
 }
 void MainWindow::removeOneTask(Task* task)
 {

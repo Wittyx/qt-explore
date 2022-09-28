@@ -43,6 +43,7 @@ private:
     void addMenuWithAction();
     void openIniFile();
     void openTreeView();
+    void qmlexpore();
 
 private:
     Ui::MainWindow *ui;

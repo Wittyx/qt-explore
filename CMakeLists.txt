@@ -22,6 +22,7 @@ set(CMAKE_AUTORCC ON)
 SET(CMAKE_PREFIX_PATH ${QT_ROOT_DIR}/lib/cmake ${QT_WEBKIT_CMAKE_DIR} ${CMAKE_PREFIX_PATH})
 
 find_package(Qt5Core REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Qml Quick REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
 #=================== INCLUSION OF Project Files ====================#
@@ -64,5 +65,4 @@ target_include_directories(MY_PROJECT PRIVATE ${SOURCE_DIR})
 
 
 #===================== LINKING LIBRARIES =======================#
-target_link_libraries(MY_PROJECT Qt5::Widgets)
-
+target_link_libraries(MY_PROJECT Qt5::Widgets Qt5::Qml Qt5::Quick)
