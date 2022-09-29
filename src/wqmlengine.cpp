@@ -16,7 +16,8 @@ void WQMLEngine::createQmlWindow(QString filename){
     ToDoList toDoList;
 
     QQmlEngine engine;
-    QQmlComponent component(&engine,QUrl(QStringLiteral("qrc:/ToDoList.qml")));
+
+    QQmlComponent component(&engine,QUrl(QStringLiteral("qrc:/MyToDoList.qml")));
     engine.rootContext()->setContextProperty(QStringLiteral("toDoList"), &toDoList);
     QObject *object = component.create();
 

@@ -114,8 +114,15 @@ void MainWindow::openTreeView(){
 }
 
 void MainWindow::qmlexpore(){
-    WQMLEngine *engine = new WQMLEngine();
-    engine->createQmlWindow(nullptr);
+    //WQMLEngine *engine = new WQMLEngine();
+    //engine->createQmlWindow(nullptr);
+    qmlRegisterType<ToDoModel>("ToDo", 1, 0, "ToDoModel");
+    qmlRegisterUncreatableType<ToDoList>("ToDo", 1, 0, "ToDoList",
+    QStringLiteral("ToDoList should not be created in QML"));
+
+    QQmlComponent component(&engine,QUrl(QStringLiteral("qrc:/MyToDoList.qml")));
+    engine.rootContext()->setContextProperty(QStringLiteral("toDoList"), &toDoList);
+    object = component.create();
 }
 void MainWindow::removeOneTask(Task* task)
 {

@@ -11,6 +11,7 @@ ApplicationWindow {
     title: qsTr("Hello World")
 
     ColumnLayout {
+        anchors.centerIn: parent
         Frame {
             Layout.fillWidth: true
 

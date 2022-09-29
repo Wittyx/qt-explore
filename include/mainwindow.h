@@ -5,12 +5,18 @@
 #include <QVector>
 #include <QThreadPool>
 #include <QSettings>
+#include <QUrl>
+#include <QQmlComponent>
+#include <QQmlEngine>
+#include <QQmlContext>
 
-#include "task.h"
 #include "SysInfo.h"
 #include "CpuWidget.h"
 #include "MemoryWidget.h"
 #include "SettingsTree.h"
+#include "todolist.h"
+#include "todomodel.h"
+#include "task.h"
 
 namespace Ui {
 class MainWindow;
@@ -51,7 +57,10 @@ private:
     CpuWidget mCpuWidget;
     MemoryWidget mMemoryWidget;
     QThreadPool *thread_pool;
+    ToDoList toDoList;
 
+    QQmlEngine engine;
+    QObject *object;
 
 };
 

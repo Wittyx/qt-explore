@@ -16,6 +16,7 @@
         <file>image/Image014.jpg</file>
         <file>image/Image015.jpg</file>
         <file>image/Image016.jpg</file>
-        <file>ToDoList.qml</file>
+        <file>MyToDoList.qml</file>
+        <file>qtquickcontrols2.conf</file>
     </qresource>
 </RCC>

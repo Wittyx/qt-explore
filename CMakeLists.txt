@@ -49,7 +49,7 @@ set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
 
 # Add the forms directory to the AUTOUIC search paths
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} ${FORMS_DIR})
-
+#add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
 
 # Add the executable
 if (WIN32) 
