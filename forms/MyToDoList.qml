@@ -6,8 +6,8 @@ import ToDo 1.0
 
 ApplicationWindow {
     visible: true
-    width: 640
-    height: 480
+    width: _aSize.width
+    height: _aSize.height
     title: qsTr("Hello World")
 
     ColumnLayout {

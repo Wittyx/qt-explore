@@ -119,9 +119,10 @@ void MainWindow::qmlexpore(){
     qmlRegisterType<ToDoModel>("ToDo", 1, 0, "ToDoModel");
     qmlRegisterUncreatableType<ToDoList>("ToDo", 1, 0, "ToDoList",
     QStringLiteral("ToDoList should not be created in QML"));
-
+    QQmlContext *qmlContext = engine.rootContext();
     QQmlComponent component(&engine,QUrl(QStringLiteral("qrc:/MyToDoList.qml")));
-    engine.rootContext()->setContextProperty(QStringLiteral("toDoList"), &toDoList);
+    qmlContext->setContextProperty(QStringLiteral("toDoList"), &toDoList);
+    qmlContext->setContextProperty("_aSize", QSize(1200, 1000));
     object = component.create();
 }
 void MainWindow::removeOneTask(Task* task)
